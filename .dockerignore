@@ -1,2 +1,9 @@
+.git
+.env
 docker-data
 docker-data/*
+dev/docker-data
+dev/docker-data/*
+**/docker-data
+node_modules
+vendor

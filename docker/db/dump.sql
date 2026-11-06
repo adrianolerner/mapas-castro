@@ -17,28 +17,10 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: tiger; Type: SCHEMA; Schema: -; Owner: mapas
---
-
-CREATE SCHEMA tiger;
-
-
-ALTER SCHEMA tiger OWNER TO mapas;
-
---
--- Name: tiger_data; Type: SCHEMA; Schema: -; Owner: mapas
---
-
-CREATE SCHEMA tiger_data;
-
-
-ALTER SCHEMA tiger_data OWNER TO mapas;
-
---
 -- Name: topology; Type: SCHEMA; Schema: -; Owner: mapas
 --
 
-CREATE SCHEMA topology;
+CREATE SCHEMA IF NOT EXISTS topology;
 
 
 ALTER SCHEMA topology OWNER TO mapas;
@@ -76,20 +58,6 @@ CREATE EXTENSION IF NOT EXISTS postgis WITH SCHEMA public;
 --
 
 COMMENT ON EXTENSION postgis IS 'PostGIS geometry, geography, and raster spatial types and functions';
-
-
---
--- Name: postgis_tiger_geocoder; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS postgis_tiger_geocoder WITH SCHEMA tiger;
-
-
---
--- Name: EXTENSION postgis_tiger_geocoder; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION postgis_tiger_geocoder IS 'PostGIS tiger geocoder and reverse geocoder';
 
 
 --
@@ -3303,38 +3271,6 @@ COPY public.user_meta (object_id, key, value, id) FROM stdin;
 
 COPY public.usr (id, auth_provider, auth_uid, email, last_login_timestamp, create_timestamp, status, profile_id) FROM stdin;
 1	1	1	Admin@local	2019-03-08 19:03:34	2019-03-07 00:00:00	1	1
-\.
-
-
---
--- Data for Name: geocode_settings; Type: TABLE DATA; Schema: tiger; Owner: mapas
---
-
-COPY tiger.geocode_settings (name, setting, unit, category, short_desc) FROM stdin;
-\.
-
-
---
--- Data for Name: pagc_gaz; Type: TABLE DATA; Schema: tiger; Owner: mapas
---
-
-COPY tiger.pagc_gaz (id, seq, word, stdword, token, is_custom) FROM stdin;
-\.
-
-
---
--- Data for Name: pagc_lex; Type: TABLE DATA; Schema: tiger; Owner: mapas
---
-
-COPY tiger.pagc_lex (id, seq, word, stdword, token, is_custom) FROM stdin;
-\.
-
-
---
--- Data for Name: pagc_rules; Type: TABLE DATA; Schema: tiger; Owner: mapas
---
-
-COPY tiger.pagc_rules (id, rule, is_custom) FROM stdin;
 \.
 
 

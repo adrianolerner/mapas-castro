@@ -1,19 +1,19 @@
-version: '2'
 services:
   mapas:
     build:
       context: ../
       dockerfile: docker/Dockerfile
-      
+
     command: /var/www/dev/start.sh
 
     ports:
-      - "80:80"
-    
+      - "${DEV_PORT:-80}:80"
+
     volumes:
       - ./docker-data/assets:/var/www/html/assets
       - ./docker-data/public-files:/var/www/html/files
       - ./docker-data/private-files:/var/www/var/private-files
+      - ./docker-data/saas-files:/var/www/var/saas-files
       - ./docker-data/logs:/var/www/var/logs
 
       - ../docker/common/config.d:/var/www/config/common.d
@@ -25,40 +25,41 @@ services:
       - ../plugins/SpamDetector:/var/www/src/plugins/SpamDetector
 
     environment:
+      - TIMEZONE=America/Sao_Paulo
       - PENDING_PCACHE_RECREATION_INTERVAL=10
       - JOBS_INTERVAL=10
       - REDIS_CACHE=redis
+      - SESSIONS_SAVE_PATH=tcp://redis:6379
       - APP_MODE=development
-      - BUILD_ASSETS=1
+      - BUILD_ASSETS=${BUILD_ASSETS:-1}
       - MAILER_TRANSPORT=smtp://mailhog:1025
-      - MAILER_FROM=sysadmin@localhost
+      - MAILER_FROM=cultura@castro.pr.gov.br
 
     depends_on:
       - db
       - redis
       - mailhog
-  
+
     stdin_open: true
     tty: true
-
 
   redis:
     image: redis:6
     command: --maxmemory 256Mb --maxmemory-policy allkeys-lru
 
   db:
-    image: postgis/postgis:14-master
+    image: postgis/postgis:16-master
     environment:
       - POSTGRES_PASSWORD=mapas
       - POSTGRES_USER=mapas
       - POSTGRES_DB=mapas
     ports:
-      - "5432:5432"
+      - "${DEV_DB_PORT:-5432}:5432"
     volumes:
       - ../docker/db:/docker-entrypoint-initdb.d
       - ./docker-data/db-data:/var/lib/postgresql/data
 
-  mailhog: 
+  mailhog:
     image: mailhog/mailhog
     ports:
       - "8025:8025"

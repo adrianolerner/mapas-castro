@@ -2,8 +2,7 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 CDIR=$( pwd )
-cd $DIR
-
+cd "$DIR"
 
 BUILD="0"
 DOWN="0"
@@ -13,21 +12,21 @@ do
 case $i in
     -b|--build)
             BUILD="1"
-	    shift
+            shift
     ;;
     -d|--down)
             DOWN="1"
-	    shift
+            shift
     ;;
     -h|--help)
-    	    echo "
-	start-dev.sh [-b] [-d]
+            echo "
+    start.sh [-b] [-d]
 
     -b   | --build      builda a imagem Docker
     -d   | --down       executa o docker compose down antes do docker compose run
     -h   | --help       Imprime esta mensagem de ajuda
     "
-    	    exit
+            exit
     ;;
 esac
 done
@@ -47,9 +46,11 @@ mkdir -p docker-data/saas-files
 
 touch docker-data/logs/app.log
 
-chown -R www-data: docker-data/assets docker-data/logs docker-data/private-files docker-data/public-files docker-data/saas-files
+if id "www-data" >/dev/null 2>&1; then
+    chown -R www-data: docker-data/assets docker-data/logs docker-data/private-files docker-data/public-files docker-data/saas-files 2>/dev/null || true
+fi
 
 docker compose run --service-ports mapas
 
 docker compose down
-cd $CDIR
+cd "$CDIR"

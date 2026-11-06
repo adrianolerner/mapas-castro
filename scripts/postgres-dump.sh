@@ -1,24 +1,24 @@
 #!/bin/bash
 
 DUMP_FOLDER="$1"
-DUMP_NAME="`date +%HH`"
+DUMP_NAME="$(date +%HH)"
 
-containers=$(docker ps | grep -E 'postgres|postgis' | awk '{print $11}')
+containers=$(docker ps --format '{{.Names}}' | grep -E 'postgres|postgis|db')
 
 #
 # Dump das bases no container
 #
 for container in $containers;
 do
-    filename="${DUMP_NAME}.sql.gz";
-    dumpname="${container%-1-*}";
+    filename="${DUMP_NAME}.sql.gz"
+    dumpname="${container%-1*}"
     dumpfolder="${DUMP_FOLDER}/${dumpname}"
     mkdir -p "$dumpfolder"
 
-    pushd "$dumpfolder"
-    docker exec  "$container" \
+    pushd "$dumpfolder" > /dev/null
+    docker exec "$container" \
         sh -c 'pg_dump -U mapas --no-owner -d mapas' \
-        | gzip -c > $filename
+        | gzip -c > "$filename"
 
-    popd;
+    popd > /dev/null
 done

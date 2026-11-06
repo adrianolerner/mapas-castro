@@ -1,33 +1,21 @@
 <?php
 
+// Utiliza o provedor real MultipleLocalAuth (habilita /autenticacao/ e /autenticacao/register/ para cadastro público).
+// Em ambiente dev, o login rápido (Fake) também permanece acessível em /autenticacao/fake
 return [
-    'auth.provider' => 'Fake',
-    // 'auth.provider' => '\MultipleLocalAuth\Provider',
-    // 'auth.config' => [
-    //     'salt' => env('AUTH_SALT', null),
-    //     'timeout' => '24 hours',
-    //     'strategies' => [
-    //         'Facebook' => [
-    //             'app_id' => env('AUTH_FACEBOOK_APP_ID', null),
-    //             'app_secret' => env('AUTH_FACEBOOK_APP_SECRET', null),
-    //             'scope' => env('AUTH_FACEBOOK_SCOPE', 'email'),
-    //         ],
-    //         'LinkedIn' => [
-    //             'api_key' => env('AUTH_LINKEDIN_API_KEY', null),
-    //             'secret_key' => env('AUTH_LINKEDIN_SECRET_KEY', null),
-    //             'redirect_uri' => '/autenticacao/linkedin/oauth2callback',
-    //             'scope' => env('AUTH_LINKEDIN_SCOPE', 'r_emailaddress')
-    //         ],
-    //         'Google' => [
-    //             'client_id' => env('AUTH_GOOGLE_CLIENT_ID', null),
-    //             'client_secret' => env('AUTH_GOOGLE_CLIENT_SECRET', null),
-    //             'redirect_uri' => '/autenticacao/google/oauth2callback',
-    //             'scope' => env('AUTH_GOOGLE_SCOPE', 'email'),
-    //         ],
-    //         'Twitter' => [
-    //             'app_id' => env('AUTH_TWITTER_APP_ID', null),
-    //             'app_secret' => env('AUTH_TWITTER_APP_SECRET', null),
-    //         ],
-    //     ]
-    // ]
+    'auth.provider' => env('DEV_AUTH_PROVIDER', '\MultipleLocalAuth\Provider'),
+    'auth.config' => [
+        'salt' => env('AUTH_SALT', 'DEV_SALT_MAPAS_CASTRO'),
+        'timeout' => '24 hours',
+        'loginOnRegister' => (bool) env('AUTH_LOGIN_ON_REGISTER', true),
+        'enableLoginByCPF' => (bool) env('AUTH_ENABLE_CPF', true),
+        'requireCpf' => (bool) env('AUTH_REQUIRED_CPF', true),
+        'metadataFieldCPF' => 'documento',
+        'userMustConfirmEmailToUseTheSystem' => (bool) env('AUTH_CONFIRM_EMAIL', false),
+        'passwordMustHaveCapitalLetters' => true,
+        'passwordMustHaveLowercaseLetters' => true,
+        'passwordMustHaveSpecialCharacters' => true,
+        'passwordMustHaveNumbers' => true,
+        'minimumPasswordLength' => 6,
+    ],
 ];
