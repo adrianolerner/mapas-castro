@@ -1,1 +1,45 @@
-.spam-add-config__content{align-items:start;display:grid;gap:.9375rem 1.5625rem;grid-template-columns:1fr .0625rem 1fr}.spam-add-config__add{display:grid;gap:.5rem}.spam-add-config__title{font-size:var(--mc-font-size-md)}.spam-add-config__tags{max-height:300px;overflow:auto}.spam-add-config__tags>ul.mc-tag-list__tagList{flex-direction:row;justify-content:center}.spam-add-config__tag--notification{background-color:var(--mc-warning-500);color:var(--mc-black)}.spam-add-config__tag--block{background-color:var(--mc-danger-500);color:var(--mc-white)}.spam-add-config__block,.spam-add-config__notification{display:grid;gap:1.5625rem;max-height:25rem;max-width:34.375rem}.spam-add-config__vertical-divisor{border-left:.0625rem solid var(--mc-gray-500);height:100%}
+/* ----- 1: SETTINGS ------- */
+/* ----- 2: ATOMS ------- */
+/* ----- 3: LAYOUT ------- */
+/* ----- 4: COMPONENTS ------- */
+.spam-add-config__content {
+  display: grid;
+  grid-template-columns: 1fr 0.0625rem 1fr;
+  gap: 0.9375rem 1.5625rem;
+  align-items: start;
+}
+.spam-add-config__add {
+  display: grid;
+  gap: 0.5rem;
+}
+.spam-add-config__title {
+  font-size: var(--mc-font-size-md);
+}
+.spam-add-config__tags {
+  overflow: auto;
+  max-height: 300px;
+}
+.spam-add-config__tags > ul.mc-tag-list__tagList {
+  flex-direction: row;
+  justify-content: center;
+}
+.spam-add-config__tag--notification {
+  background-color: var(--mc-warning-500);
+  color: var(--mc-black);
+}
+.spam-add-config__tag--block {
+  background-color: var(--mc-danger-500);
+  color: var(--mc-white);
+}
+.spam-add-config__notification, .spam-add-config__block {
+  display: grid;
+  gap: 1.5625rem;
+  max-height: 25rem;
+  max-width: 34.375rem;
+}
+.spam-add-config__vertical-divisor {
+  height: 100%;
+  border-left: 0.0625rem solid var(--mc-gray-500);
+}
+
+/* ----- 5: AREAS ------- */

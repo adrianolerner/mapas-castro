@@ -51,6 +51,8 @@ services:
       - TIMEZONE=${TIMEZONE:-America/Sao_Paulo}
       - REDIS_CACHE=redis
       - SESSIONS_SAVE_PATH=tcp://sessions:6379
+      - PENDING_PCACHE_RECREATION_INTERVAL=${PENDING_PCACHE_RECREATION_INTERVAL:-60}
+      - JOBS_INTERVAL=${JOBS_INTERVAL:-15}
     depends_on:
       - db
       - redis
