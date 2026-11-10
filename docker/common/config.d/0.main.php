@@ -48,4 +48,15 @@ return [
     // Filtros dos carrosséis da Home (por padrão exibe todas as entidades publicadas, sem exigir selo verificador manual)
     'home.opportunities.filter' => json_decode(env('HOME_OPPORTUNITIES_FILTER_JSON', '{}')),
     'home.featured.filter' => json_decode(env('HOME_FEATURED_FILTER_JSON', '{}')),
+
+    // Gerenciador de assets otimizado: agrupa JS/CSS instantaneamente sem travar a requisição HTTP por 6-7s no terser/uglifycss
+    // (a compressão é feita em tempo real via Gzip pelo Nginx em ~2ms)
+    'themes.assetManager' => [
+        'publishPath' => BASE_PATH . 'assets/',
+        'mergeScripts' => (bool) env('ASSETS_MERGE_SCRIPTS', env('APP_MODE', 'production') === 'production'),
+        'mergeStyles' => (bool) env('ASSETS_MERGE_STYLES', env('APP_MODE', 'production') === 'production'),
+        'process.js' => 'awk 1 {IN} > {OUT}',
+        'process.css' => 'awk 1 {IN} > {OUT}',
+        'publishFolderCommand' => 'cp -R -u {IN} {PUBLISH_PATH}{FILENAME}',
+    ],
 ];
