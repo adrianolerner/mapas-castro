@@ -181,9 +181,11 @@ Abaixo estão documentadas todas as correções, otimizações de desempenho e p
   - O token de validação era gerado recortando uma substring de um hash `bcrypt` (podendo conter caracteres `.` e `/` na URL); foi substituído por `bin2hex(random_bytes(16))`.
   - O login automático após cadastro (`loginOnRegister`) agora respeita a flag `AUTH_CONFIRM_EMAIL` (`userMustConfirmEmailToUseTheSystem`), exibindo a mensagem de envio de confirmação quando a validação por e-mail estiver ativa.
   - Na rota `GET(auth.confirma-email)`, foi adicionado o `return;` ausente ao detectar token inválido (que causava erro fatal 500 ao acessar `$usermeta->owner` em `null`) e corrigido o texto da view `confirm-email.php` (que exibia mensagem de "Alteração de senha" em vez de "E-mail confirmado com sucesso").
+  - No passo inicial de criação de conta (`create-account/template.php`), o texto provisório *"Texto sobre o motivo da coleta do CPF"* do tooltip **"Por que pedimos este dado?"** foi substituído pela justificativa legal baseada no Art. 7º, incisos II e III da LGPD (Lei nº 13.709/2018).
 - **Arquivos modificados**:
   - `plugins/MultipleLocalAuth/Provider.php`
   - `plugins/MultipleLocalAuth/views/auth/confirm-email.php`
+  - `plugins/MultipleLocalAuth/components/create-account/template.php`
   - `docker/production/config.d/authentication.php`
   - `dev/config.d/auth.php`
   - `dev/config.d/mailer.php`
