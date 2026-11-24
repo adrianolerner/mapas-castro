@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DUMP_FOLDER="$1"
+DUMP_FOLDER="${1%/}"
 DUMP_NAME="$(date +%HH)"
 
 containers=$(docker ps --format '{{.Names}}' | grep -E 'postgres|postgis|db')

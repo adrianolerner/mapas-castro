@@ -1,17 +1,19 @@
 #!/bin/bash
-MON=`date +%Y-%m`
-DUMP_FOLDER="$1"
+MON=$(date +%Y-%m)
+DUMP_FOLDER="${1%/}"
 DUMP_NAME="00H"
 
-containers=$(docker ps | grep -E 'postgres|postgis' | awk '{print $11}')
+containers=$(docker ps --format '{{.Names}}' | grep -E 'postgres|postgis|db')
 
 #
-# Dump das bases no container
+# Cópia mensal do dump das bases no container
 #
 for container in $containers;
 do
-    filename="${DUMP_NAME}.sql.gz";
-    dumpname="${container%-1-*}";
+    filename="${DUMP_NAME}.sql.gz"
+    dumpname="${container%-1*}"
     dumpfolder="${DUMP_FOLDER}/${dumpname}"
-    cp $dumpfolder/$filename $dumpfolder/$MON.sql.gz
+    if [ -f "$dumpfolder/$filename" ]; then
+        cp "$dumpfolder/$filename" "$dumpfolder/$MON.sql.gz"
+    fi
 done
